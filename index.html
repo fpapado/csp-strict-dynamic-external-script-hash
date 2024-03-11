@@ -1,0 +1,28 @@
+<!DOCTYPE HTML>
+<html>
+
+<head>
+    <title>`strict-dynamic` allows scripts matching hashes present in the policy.</title>
+    <meta http-equiv="Content-Security-Policy" content="script-src 'strict-dynamic' 'nonce-dummy' 'sha256-wIc3KtqOuTFEu6t17sIBuOswgkV406VJvhSk79Gw6U0='">
+</head>
+
+<body>
+    <h1>`strict-dynamic` allows scripts matching hashes present in the policy.</h1>
+    <p>If the test succeeds, nothing will be logged below.</p>
+    <div id='log'></div>
+
+    <script nonce='dummy'>
+        window.addEventListener('securitypolicyviolation', function(e) {
+            document.getElementById('log').append('unexpected CSP violation report')
+            console.error(e)
+        });
+    </script>
+
+    <script nonce='dummy'>
+        var externalRan = false;
+    </script>
+    <script src='./externalScript.js'
+        integrity="sha256-wIc3KtqOuTFEu6t17sIBuOswgkV406VJvhSk79Gw6U0="></script>
+</body>
+
+</html>
